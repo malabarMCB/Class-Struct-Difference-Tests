@@ -32,7 +32,7 @@ namespace ClassStructDifferenceTests
         }
 
         [Fact]
-        public void AssigmentDifference()//TODO rename
+        public void CopyingValueDefference()
         {
             MyClass myClass = new MyClass();
             MyClass myClass1 = myClass;
@@ -60,7 +60,7 @@ namespace ClassStructDifferenceTests
         }
 
         [Fact]
-        public void NullAssigment()//TODO without ?
+        public void NullAssigment()
         {
             MyClass myClass=null;
             myClass.Should().BeNull();           
@@ -82,19 +82,9 @@ namespace ClassStructDifferenceTests
         {
             typeof(MyClass).IsClass.Should().BeTrue();
             typeof(MyClass).IsValueType.Should().BeFalse();
-
+       
             typeof(MyStruct).IsClass.Should().BeFalse();
             typeof(MyStruct).IsValueType.Should().BeTrue();
-        }
-
-        [Fact]
-        public void ArrayUpcastDifference()
-        {
-            MyClass[] classArray = {new MyClass(), new MyClass()};
-            object[] baseClassArray = classArray;
-            baseClassArray[0].Should().BeOfType(typeof(object));
-            //TODO complete
-
         }
     }
 }
