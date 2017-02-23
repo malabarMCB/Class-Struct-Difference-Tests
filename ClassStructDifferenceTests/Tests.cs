@@ -1,11 +1,9 @@
 ﻿using System;
 using Xunit;
 using FluentAssertions;
-using System.Linq;
 
 namespace ClassStructDifferenceTests
 {
-    delegate void MethodArgumentDelegate<T>(T arg);
 
     public class Tests
     {
@@ -20,19 +18,7 @@ namespace ClassStructDifferenceTests
         }
 
         [Fact]
-        public void SeveralObjectsEqualsDifference()
-        {
-            MyClass myClass = new MyClass();
-            MyClass myClass1 = new MyClass();
-            Equals(myClass, myClass1).Should().BeFalse();
-
-            MyStruct myStruct = new MyStruct();
-            MyStruct myStruct1 = new MyStruct();
-            Equals(myStruct, myStruct1).Should().BeTrue();
-        }
-
-        [Fact]
-        public void CopyingValueDefference()
+        public void CopyingValueDifference()
         {
             MyClass myClass = new MyClass();
             MyClass myClass1 = myClass;
@@ -48,25 +34,25 @@ namespace ClassStructDifferenceTests
         [Fact]
         public void MethodArgumentsDifferemnce()
         {
-            MethodArgumentDelegate<MyClass> methodClass = arg => arg.Status = "New Status";
+            Action<MyClass> methodClass = arg => arg.Status = "New Status";
             MyClass myClass = new MyClass();
             methodClass.Invoke(myClass);
             myClass.Status.Should().Be("New Status");
 
             MyStruct myStruct = new MyStruct();
-            MethodArgumentDelegate<MyStruct> methodStruct = arg => arg.Status = "New Status";
+            Action<MyStruct> methodStruct = arg => arg.Status = "New Status";
             methodStruct.Invoke(myStruct);
             myStruct.Status.Should().NotBe("New Status");
         }
 
         [Fact]
-        public void NullAssigment()
+        public void DefaultValueDifference()
         {
-            MyClass myClass=null;
+            MyClass myClass=default(MyClass);
             myClass.Should().BeNull();           
 
-            MyStruct? myStruct = null;
-            myStruct.Should().BeNull();
+            MyStruct myStruct = default(MyStruct);
+            myStruct.Should().NotBeNull();
         }
 
         [Fact]
